@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Lookup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 90%;
+            width: 1200px;
+            padding: 20px;
+            background-color: white;
+            margin: 20px auto;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            font-size: 16px;
+            width: 200px;
+        }
+
+        button {
+            padding: 8px 12px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Search Employees</h1>
+
+        <form method="POST">
+            <input type="text" name="emp_id" placeholder="Employee ID">
+            <input type="text" name="name" placeholder="Name">
+            <input type="text" name="department" placeholder="Department">
+            <input type="text" name="position" placeholder="Position">
+            <button type="submit">Search</button>
+            <a href="/export_csv"><button type="button">Export CSV</button></a>
+        </form>
+
+        {% if employees %}
+            <h2>Results</h2>
+            <table>
+                <tr>
+                    <th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Department</th><th>Position</th>
+                    <th>Salary</th><th>Hire Date</th><th>Status</th>
+                </tr>
+                {% for emp in employees %}
+                <tr>
+                    <td>{{ emp[0] }}</td>
+                    <td>{{ emp[1] }} {{ emp[2] }}</td>
+                    <td>{{ emp[3] }}</td>
+                    <td>{{ emp[4] }}</td>
+                    <td>{{ emp[5] }}</td>
+                    <td>{{ emp[6] }}</td>
+                    <td>₹{{ "{:,.2f}".format(emp[7]) }}</td>
+                    <td>{{ emp[8] }}</td>
+                    <td>{{ emp[9] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% elif employees is not none %}
+            <p>No employees found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
