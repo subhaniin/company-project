@@ -16,32 +16,34 @@ def get_connection():
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    query = "SELECT * FROM employees"
+    query = "SELECT emp_id, emp_name, email, phone, dept_id, role_, salary, hire_date, status FROM employees"
     filters = []
     values = []
 
     if request.method == 'POST':
         emp_id = request.form.get('emp_id')
-        name = request.form.get('name')
-        dept = request.form.get('department')
+        name = request.form.get('emp_name')
+        dept = request.form.get('dept_id')
         position = request.form.get('position')
 
         if emp_id:
             filters.append("emp_id = %s")
             values.append(emp_id)
         if name:
-            filters.append("(first_name || ' ' || last_name) ILIKE %s")
+            filters.append("emp_name ILIKE %s")
             values.append(f"%{name}%")
-
         if dept:
-            filters.append("department ILIKE %s")
-            values.append(f"%{dept}%")
+            filters.append("dept_id = %s")
+            values.append(dept)
         if position:
-            filters.append("position ILIKE %s")
+            filters.append("role_ ILIKE %s")
             values.append(f"%{position}%")
+
 
     if filters:
         query += " WHERE " + " AND ".join(filters)
+    query += " ORDER BY emp_id"
+
 
     conn = get_connection()
     cur = conn.cursor()
@@ -63,7 +65,7 @@ def export_csv():
 
     si = io.StringIO()
     writer = csv.writer(si)
-    writer.writerow(['ID', 'First Name', 'Last Name', 'Email', 'Phone', 'Dept', 'Position', 'Salary', 'Hire Date', 'Status'])
+    writer.writerow(['ID', 'Employee Name', 'Email', 'Phone', 'Dept', 'Position', 'Salary', 'Hire Date', 'Status'])
     writer.writerows(employees)
     output = io.BytesIO()
     output.write(si.getvalue().encode('utf-8'))
