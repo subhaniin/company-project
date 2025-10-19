@@ -11,7 +11,6 @@
             display: flex;
             justify-content: center;
         }
-
         .container {
             max-width: 90%;
             width: 1200px;
@@ -19,11 +18,9 @@
             background-color: white;
             margin: 20px auto;
         }
-
         h1, h2 {
             text-align: center;
         }
-
         form {
             display: flex;
             flex-wrap: wrap;
@@ -31,36 +28,36 @@
             gap: 10px;
             margin-bottom: 20px;
         }
-
         input[type="text"] {
             padding: 8px;
             font-size: 16px;
             width: 200px;
         }
-
         button {
             padding: 8px 12px;
             font-size: 16px;
             cursor: pointer;
         }
-
         table {
             width: 100%;
             border-collapse: collapse;
         }
-
         th, td {
             padding: 10px;
             border: 1px solid #ccc;
             text-align: left;
         }
-
         th {
             background-color: #f0f0f0;
         }
-
         tr:nth-child(even) {
             background-color: #f9f9f9;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
         }
     </style>
 </head>
@@ -87,14 +84,14 @@
                 {% for emp in employees %}
                 <tr>
                     <td>{{ emp[0] }}</td>
-                    <td>{{ emp[1] }} {{ emp[2] }}</td>
+                    <td>{{ emp[1] }}</td>
+                    <td>{{ emp[2] }}</td>
                     <td>{{ emp[3] }}</td>
                     <td>{{ emp[4] }}</td>
                     <td>{{ emp[5] }}</td>
                     <td>{{ emp[6] }}</td>
-                    <td>₹{{ "{:,.2f}".format(emp[7]) }}</td>
+                    <td>{{ emp[7] }}</td>
                     <td>{{ emp[8] }}</td>
-                    <td>{{ emp[9] }}</td>
                 </tr>
                 {% endfor %}
             </table>
