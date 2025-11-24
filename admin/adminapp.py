@@ -5,15 +5,40 @@ import io
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'  # Needed for flash messages
+from flask import g, session, has_request_context
 
 def get_connection():
-    return psycopg2.connect(
+    """
+    Open a new DB connection and set the session-scoped audit.username variable
+    so the trigger can read who performed the change.
+    Note: If you later switch to a connection pool, set this variable each time
+    you check out a connection from the pool.
+    """
+    conn = psycopg2.connect(
         dbname="company",
         user="postgres",
         password="Pqsql",
         host="localhost",
         port="5432"
     )
+    try:
+        # determine audit user: prefer g.audit_user (set in before_request),
+        # then session['username'], else fallback to 'system'
+        audit_user = None
+        if has_request_context():
+            audit_user = getattr(g, 'audit_user', None) or session.get('username') or session.get('user')
+        audit_user = audit_user or 'adminWEBapp'
+
+        with conn.cursor() as cur:
+            cur.execute("SELECT set_config('audit.username', %s, true)", (str(audit_user),))
+            # commit is not needed for set_config when is_local = true but safe to keep autocommit behavior
+        return conn
+    except Exception:
+        # ensure conn closed on error
+        conn.close()
+        raise
+
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
