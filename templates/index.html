@@ -1,103 +1,55 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Employee Lookup</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f8f8;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-        }
-        .container {
-            max-width: 90%;
-            width: 1200px;
-            padding: 20px;
-            background-color: white;
-            margin: 20px auto;
-        }
-        h1, h2 {
-            text-align: center;
-        }
-        form {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        input[type="text"] {
-            padding: 8px;
-            font-size: 16px;
-            width: 200px;
-        }
-        button {
-            padding: 8px 12px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 10px;
-            border: 1px solid #ccc;
-            text-align: left;
-        }
-        th {
-            background-color: #f0f0f0;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            justify-content: center;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Search Employees</h1>
+{% extends "base.html" %}
+{% block title %}Employee Lookup — Company{% endblock %}
 
-        <form method="POST">
-            <input type="text" name="emp_id" placeholder="Employee ID">
-            <input type="text" name="name" placeholder="Name">
-            <input type="text" name="department" placeholder="Department">
-            <input type="text" name="position" placeholder="Position">
-            <button type="submit">Search</button>
-            <a href="/export_csv"><button type="button">Export CSV</button></a>
-        </form>
+{% block content %}
+  <div class="card" style="margin-top:20px;">
+    <h1 style="text-align:center">Search Employees</h1>
 
-        {% if employees %}
-            <h2>Results</h2>
-            <table>
-                <tr>
-                    <th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Department</th><th>Position</th>
-                    <th>Salary</th><th>Hire Date</th><th>Status</th>
-                </tr>
-                {% for emp in employees %}
-                <tr>
-                    <td>{{ emp[0] }}</td>
-                    <td>{{ emp[1] }}</td>
-                    <td>{{ emp[2] }}</td>
-                    <td>{{ emp[3] }}</td>
-                    <td>{{ emp[4] }}</td>
-                    <td>{{ emp[5] }}</td>
-                    <td>{{ emp[6] }}</td>
-                    <td>{{ emp[7] }}</td>
-                    <td>{{ emp[8] }}</td>
-                </tr>
-                {% endfor %}
-            </table>
-        {% elif employees is not none %}
-            <p>No employees found.</p>
-        {% endif %}
-    </div>
-</body>
-</html>
+    <form method="POST" class="flex gap-2 p-2" aria-label="Employee search form">
+      <input class="input" type="text" name="emp_id" placeholder="Employee ID" value="{{ request.form.emp_id or request.args.get('emp_id','') }}" inputmode="numeric" />
+      <input class="input" type="text" name="name" placeholder="Name" value="{{ request.form.name or request.args.get('name','') }}" />
+      <input class="input" type="text" name="department" placeholder="Department" value="{{ request.form.department or request.args.get('department','') }}" />
+      <input class="input" type="text" name="position" placeholder="Position" value="{{ request.form.position or request.args.get('position','') }}" />
+      <button class="btn btn-primary" type="submit" aria-label="Search">Search</button>
+      <a href="{{ url_for('export_csv') }}" class="btn btn-ghost" role="link">Export CSV</a>
+    </form>
+
+    {% if employees %}
+      <h2 style="text-align:center">Results</h2>
+      <div class="table-responsive" style="overflow:auto">
+        <table class="table" role="table" aria-label="Employee results">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Phone</th>
+              <th scope="col">Department</th>
+              <th scope="col">Position</th>
+              <th scope="col">Salary</th>
+              <th scope="col">Hire Date</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for emp in employees %}
+            <tr>
+              <td>{{ emp[0] }}</td>
+              <td>{{ emp[1] }}</td>
+              <td>{{ emp[2] }}</td>
+              <td>{{ emp[3] }}</td>
+              <td>{{ emp[4] }}</td>
+              <td>{{ emp[5] }}</td>
+              <td>{{ emp[6] }}</td>
+              <td>{{ emp[7] }}</td>
+              <td>{{ emp[8] }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% elif employees is not none %}
+      <p style="text-align:center" class="text-muted">No employees found.</p>
+    {% endif %}
+  </div>
+{% endblock %}
