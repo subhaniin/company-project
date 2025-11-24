@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{% block title %}Company{% endblock %}</title>
+
+  <!-- Theme CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/theme1.css') }}">
+
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <header class="navbar" role="banner">
+    <div class="brand">Company</div>
+    <div class="nav-actions" role="navigation" aria-label="Main">
+      <!-- Only show admin controls when the view passed show_admin_links=True -->
+      {% if show_admin_links %}
+        <a class="btn btn-primary" href="{{ admin_url if admin_url else url_for('admin.add_employee') }}">Admin</a>
+      {% endif %}
+      <a class="btn btn-ghost" href="{{ url_for('export_csv') }}">Export CSV</a>
+      <button id="themeToggle" class="btn btn-ghost" aria-label="Toggle theme">Toggle</button>
+    </div>
+  </header>
+
+  <main class="container" role="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <script>
+    // simple light/dark toggle using the CSS .light override
+    const btn = document.getElementById('themeToggle');
+    if (btn) {
+      btn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('light');
+        localStorage.theme = document.documentElement.classList.contains('light') ? 'light' : 'dark';
+      });
+      if (localStorage.theme === 'light') document.documentElement.classList.add('light');
+    }
+  </script>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>
