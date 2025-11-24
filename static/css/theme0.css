@@ -1,0 +1,84 @@
+/* Company Theme - CSS
+   Drop this into static/css/theme.css and include in your templates:
+   <link rel="stylesheet" href="/static/css/theme.css">
+
+   NOTE: hero background uses the uploaded screenshot as a visual placeholder.
+   The path below is the local file you uploaded and will be transformed into a URL by the environment:
+   url('/mnt/data/2692e8ef-93bb-4c01-9505-957250978aab.png')
+*/
+
+:root{
+  --bg: #0f172a;            /* page background (dark navy) */
+  --card-bg: rgba(255,255,255,0.03);
+  --surface: #0b1220;
+  --text: #e6eef8;
+  --muted: #98a2b3;
+
+  --primary: #0ea5a4;      /* teal */
+  --primary-600: #0b9b98;
+  --accent: #7c3aed;       /* purple accent */
+  --danger: #ef4444;
+  --success: #10b981;
+
+  --radius: 12px;
+  --glass: rgba(255,255,255,0.04);
+  --glass-strong: rgba(255,255,255,0.06);
+}
+
+/* Light theme override */
+:root.light{
+  --bg: #ffffff;
+  --card-bg: rgba(2,6,23,0.02);
+  --surface: #ffffff;
+  --text: #0b1220;
+  --muted: #6b7280;
+  --glass: rgba(2,6,23,0.03);
+}
+
+/* Base */
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue';background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.container{max-width:1100px;margin:32px auto;padding:0 20px}
+.card{background:linear-gradient(180deg,var(--card-bg), rgba(255,255,255,0.02));border-radius:var(--radius);padding:18px;box-shadow:0 8px 30px rgba(2,6,23,0.6);}
+
+/* Navbar */
+.navbar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter: blur(6px);border-bottom:1px solid rgba(255,255,255,0.03)}
+.brand{font-weight:700;font-size:1.15rem;color:var(--text)}
+.nav-actions{display:flex;gap:8px}
+.btn{display:inline-block;padding:8px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:600}
+.btn-primary{background:linear-gradient(180deg,var(--primary),var(--primary-600));color:white;box-shadow:0 6px 18px rgba(14,165,164,0.14)}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text)}
+
+/* Table */
+.table{width:100%;border-collapse:collapse}
+.table th{background:rgba(255,255,255,0.02);padding:10px;text-align:left;color:var(--muted);font-size:0.9rem}
+.table td{padding:10px;border-top:1px solid rgba(255,255,255,0.03)}
+.table tr:nth-child(even){background:rgba(255,255,255,0.01)}
+
+/* Form inputs */
+.input, .select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--text)}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:1fr 420px;gap:24px;align-items:center;padding:48px;border-radius:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));}
+.hero-visual{height:280px;border-radius:12px;background-image: url('/mnt/data/2692e8ef-93bb-4c01-9505-957250978aab.png');background-size:cover;background-position:center;box-shadow:0 10px 40px rgba(2,6,23,0.6)}
+.hero h1{margin:0;font-size:2rem}
+
+/* Badges & chips */
+.badge{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.03);font-weight:600}
+
+/* Small utilities */
+.flex{display:flex}
+.gap-2{gap:8px}
+.p-2{padding:8px}
+.text-muted{color:var(--muted)}
+
+/* Dark/Light toggle helper (JS required) */
+/* Example JS to toggle: document.documentElement.classList.toggle('light') */
+
+/* Accessible focus */
+:focus{outline:2px solid rgba(14,165,164,0.18);outline-offset:2px}
+
+/* Responsive */
+@media (max-width:900px){.hero{grid-template-columns:1fr;}.hero-visual{height:200px}}
+
+/* End of theme */
