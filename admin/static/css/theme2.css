@@ -1,0 +1,117 @@
+/* Company Theme - POLISHED CSS
+   File: static/css/theme.css
+   Polished UI: rounded hero, subtle shadows, hover effects, sticky header,
+   table row hover, sticky header, pagination, result-count badge, loading shimmer,
+   prefers-color-scheme auto-detect, improved responsive layout.
+
+   NOTE: This is pure CSS (no external images). If you want the decorative
+   hero background image later, we can swap the gradient for a background-image.
+*/
+
+:root{
+  /* Core colors */
+  --bg: #0b1220;              /* page background */
+  --surface: #0f1b2b;         /* card surfaces */
+  --card-ink: rgba(255,255,255,0.03);
+  --muted: #93a1b2;
+  --text: #e6eef8;
+
+  /* accents */
+  --primary: #0ea5a4;
+  --primary-600: #0bb0a9;
+  --accent: #7c3aed;
+  --success: #10b981;
+  --danger: #ef4444;
+
+  --radius: 14px;
+  --gap: 18px;
+  --container-width: 1100px;
+}
+
+/* Light theme overrides */
+@media (prefers-color-scheme: light){
+  :root{
+    --bg: #f7fafc;
+    --surface: #ffffff;
+    --card-ink: rgba(2,6,23,0.02);
+    --muted: #6b7280;
+    --text: #0b1220;
+  }
+}
+
+/* Reset & base */
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,'Helvetica Neue';background:linear-gradient(180deg,var(--bg), #071020 60%);color:var(--text);-webkit-font-smoothing:antialiased}
+.container{max-width:var(--container-width);margin:40px auto;padding:0 20px}
+
+/* Navbar */
+.navbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:18px 28px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border-bottom:1px solid rgba(255,255,255,0.02);backdrop-filter: blur(6px)}
+.brand{font-weight:700;font-size:1.25rem;color:var(--text)}
+.nav-actions{display:flex;gap:10px;align-items:center}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:10px;border:1px solid transparent;cursor:pointer;font-weight:600;text-decoration:none}
+.btn-primary{background:linear-gradient(180deg,var(--primary),var(--primary-600));color:white;box-shadow:0 8px 30px rgba(14,165,164,0.12);border-color:rgba(255,255,255,0.02)}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.05);color:var(--text)}
+.btn:focus{outline:3px solid rgba(14,165,164,0.12);outline-offset:3px}
+.btn:hover{transform:translateY(-2px);transition:transform .18s ease}
+
+/* Hero card */
+.hero{display:grid;grid-template-columns:1fr;gap:20px;padding:46px;border-radius:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 18px 50px rgba(2,6,23,0.6);}
+.hero h1{margin:0;font-size:2rem;text-align:center}
+.hero .subtitle{text-align:center;color:var(--muted);margin-top:6px}
+
+/* Search form */
+.search-row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:18px}
+.input{min-width:180px;padding:14px 16px;border-radius:12px;border:1px dashed rgba(255,255,255,0.03);background:transparent;color:var(--text);font-size:0.98rem}
+.input::placeholder{color:rgba(255,255,255,0.28)}
+.input:focus{border-style:solid;border-color:rgba(14,165,164,0.12);box-shadow:0 6px 18px rgba(14,165,164,0.04)}
+
+/* Result count */
+.result-meta{display:flex;justify-content:space-between;align-items:center;margin-top:28px;padding:0 6px}
+.badge{display:inline-block;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.02);font-weight:700;color:var(--muted)}
+
+/* Table */
+.table-wrap{margin-top:16px;border-radius:12px;overflow:hidden}
+.table{width:100%;border-collapse:collapse}
+.table thead{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));color:var(--muted);font-weight:700}
+.table th, .table td{padding:14px 16px;text-align:left;border-top:1px solid rgba(255,255,255,0.02)}
+.table tbody tr{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
+.table tbody tr:hover{background:linear-gradient(90deg, rgba(14,165,164,0.03), rgba(124,58,237,0.02));transform:translateY(-2px);box-shadow:0 10px 30px rgba(2,6,23,0.28)}
+.table td.status{font-weight:700}
+
+/* Sticky table header */
+.table thead th{position:sticky;top:0;z-index:10;padding-top:16px;padding-bottom:16px}
+.table-wrap{max-height:520px;overflow:auto}
+
+/* Pagination */
+.pagination{display:flex;gap:8px;align-items:center;justify-content:center;padding:16px}
+.page-btn{padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text);cursor:pointer}
+.page-btn.active{background:var(--primary);color:white;box-shadow:0 8px 24px rgba(14,165,164,0.12)}
+
+/* Loading shimmer (for async loads) */
+.shimmer{position:relative;overflow:hidden;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.03));}
+.shimmer::after{content:'';position:absolute;top:0;left:-150%;width:150%;height:100%;background:linear-gradient(90deg, rgba(255,255,255,0.00), rgba(255,255,255,0.06), rgba(255,255,255,0.00));transform:skewX(-12deg);animation:shimmer 1.6s linear infinite}
+@keyframes shimmer{100%{left:150%}}
+
+/* Mobile responsive */
+@media (max-width:900px){
+  .container{padding:20px}
+  .hero{padding:24px}
+  .input{min-width:120px}
+  .table th, .table td{padding:10px}
+  .table-wrap{max-height:360px}
+}
+
+/* Utilities */
+.text-muted{color:var(--muted)}
+.center{text-align:center}
+.flex{display:flex}
+.gap{gap:12px}
+
+/* small animations */
+@media (prefers-reduced-motion: no-preference){
+  .btn, .table tbody tr{transition:all .18s cubic-bezier(.2,.9,.3,1)}
+}
+
+/* End of polished theme */
