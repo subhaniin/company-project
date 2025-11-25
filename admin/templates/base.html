@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{% block title %}Admin - Company{% endblock %}</title>
+
+  <!-- Polished Theme CSS (create at static/css/theme.css) -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <header class="navbar" role="banner">
+    <div class="brand">Admin Panel</div>
+
+    <nav class="nav-actions" role="navigation" aria-label="Admin">
+      <a class="btn btn-ghost" href="{{ url_for('index') }}">Dashboard</a>
+      <a class="btn btn-primary" href="{{ url_for('add_employee') }}">Add</a>
+      <a class="btn btn-ghost" href="{{ url_for('export_csv') }}">Export CSV</a>
+
+      <!-- admin user display (only shown if session contains username) -->
+      {% if session.get('username') %}
+        <span class="badge" style="margin-left:10px">Admin: {{ session.get('username') }}</span>
+        <a class="btn btn-ghost" href="{{ url_for('admin_logout') }}">Logout</a>
+      {% endif %}
+
+      <button id="themeToggle" class="btn btn-ghost" aria-label="Toggle theme">Toggle</button>
+    </nav>
+  </header>
+
+  <main class="container" role="main">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for cat, msg in messages %}
+          <div class="card" style="margin-bottom:14px;">
+            <div class="p-2">
+              <strong>{{ cat|title }}:</strong> {{ msg }}
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <script>
+    // light/dark toggle persistence
+    (function(){
+      const btn = document.getElementById('themeToggle');
+      if(!btn) return;
+      btn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('light');
+        localStorage.theme = document.documentElement.classList.contains('light') ? 'light' : 'dark';
+      });
+      if (localStorage.theme === 'light') document.documentElement.classList.add('light');
+    })();
+  </script>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>
