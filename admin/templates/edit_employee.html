@@ -1,21 +1,61 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Edit Employee</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}Edit Employee{% endblock %}
+
+{% block content %}
+  <div class="hero" style="margin-top:8px;">
     <h1>Edit Employee</h1>
-    <form method="POST">
-        <input type="text" name="emp_name" placeholder="Employee Name" value="{{ emp[1] }}" required><br>
-        <input type="email" name="email" placeholder="Email" value="{{ emp[2] }}" required><br>
-        <input type="text" name="phone" placeholder="Phone" value="{{ emp[3] }}"><br>
-        <input type="number" name="dept_id" placeholder="Department ID" value="{{ emp[4] }}"><br>
-        <input type="text" name="role_" placeholder="Position" value="{{ emp[5] }}"><br>
-        <input type="number" step="0.01" name="salary" placeholder="Salary" value="{{ emp[6] }}"><br>
-        <input type="date" name="hire_date" value="{{ emp[7] }}"><br>
-        <input type="text" name="status" placeholder="Status" value="{{ emp[8] }}"><br>
-        <button type="submit">Update</button>
-    </form>
-    <a href="{{ url_for('index') }}">Back</a>
-</body>
-</html>
+    <p class="subtitle">Update employee details</p>
+
+    <div class="form-card" style="margin-top:18px;">
+      <form method="POST" class="form-row" autocomplete="off" novalidate>
+        <div class="form-group full">
+          <label class="text-muted" for="emp_name">Full name</label>
+          <input id="emp_name" class="input" name="emp_name" value="{{ emp[1] }}" required>
+        </div>
+
+        <div class="form-group full">
+          <label class="text-muted" for="email">Email</label>
+          <input id="email" class="input" name="email" value="{{ emp[2] }}" type="email" required>
+        </div>
+
+        <div class="form-group">
+          <label class="text-muted" for="phone">Phone</label>
+          <input id="phone" class="input" name="phone" value="{{ emp[3] }}">
+        </div>
+
+        <div class="form-group">
+          <label class="text-muted" for="dept_id">Dept ID</label>
+          <input id="dept_id" class="input" name="dept_id" value="{{ emp[4] }}">
+        </div>
+
+        <div class="form-group">
+          <label class="text-muted" for="role_">Role / Position</label>
+          <input id="role_" class="input" name="role_" value="{{ emp[5] }}">
+        </div>
+
+        <div class="form-group">
+          <label class="text-muted" for="salary">Salary</label>
+          <input id="salary" class="input" name="salary" value="{{ emp[6] }}">
+        </div>
+
+        <div class="form-group">
+          <label class="text-muted" for="hire_date">Hire date</label>
+          <input id="hire_date" class="input" name="hire_date" value="{{ emp[7] }}">
+        </div>
+
+        <div class="form-group">
+          <label class="text-muted" for="status">Status</label>
+          <input id="status" class="input" name="status" value="{{ emp[8] }}">
+        </div>
+
+        <div style="flex:0 0 auto; display:flex; align-items:center;">
+          <button class="btn btn-primary" type="submit">Update</button>
+        </div>
+      </form>
+
+      <div class="form-actions">
+        <a class="btn btn-ghost" href="{{ url_for('index') }}">Cancel</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
