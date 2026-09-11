@@ -3,6 +3,9 @@ import psycopg2
 import csv
 import io
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 app = Flask(__name__)
 
 
