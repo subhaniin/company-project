@@ -1,3 +1,4 @@
 .env
 __pycache__/
 *.pyccompany.dump
+company.dump
