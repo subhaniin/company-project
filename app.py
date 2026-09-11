@@ -9,9 +9,9 @@ def get_connection():
     return psycopg2.connect(
         dbname="company",
         user="postgres",
-        password="Pqsql",
+        password="Sql@3690",
         host="localhost",
-        port="5432"
+        port="5433"
     )
 
 @app.route('/', methods=['GET', 'POST'])

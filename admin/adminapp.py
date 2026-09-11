@@ -17,9 +17,9 @@ def get_connection():
     conn = psycopg2.connect(
         dbname="company",
         user="postgres",
-        password="Pqsql",
+        password="Sql@3690",
         host="localhost",
-        port="5432"
+        port="5433"
     )
     try:
         # determine audit user: prefer g.audit_user (set in before_request),
