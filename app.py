@@ -2,16 +2,17 @@ from flask import Flask, render_template, request, send_file
 import psycopg2
 import csv
 import io
-
+import os
 app = Flask(__name__)
+
 
 def get_connection():
     return psycopg2.connect(
-        dbname="company",
-        user="postgres",
-        password="Sql@3690",
-        host="localhost",
-        port="5433"
+        dbname=os.environ["DB_NAME"],
+        user=os.environ["DB_USER"],
+        password=os.environ["DB_PASSWORD"],
+        host=os.environ["DB_HOST"],
+        port=os.environ["DB_PORT"]
     )
 
 @app.route('/', methods=['GET', 'POST'])
